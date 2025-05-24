@@ -1,4 +1,6 @@
+import 'package:agcnews/data/classes/top_stories_activity.dart';
 import 'package:agcnews/data/constants.dart';
+import 'package:agcnews/data/endpoints.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -10,6 +12,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Future<List<TopStoriesActivity>>? topStories;
+
+  @override
+  void initState() {
+    fetchTopStories();
+    super.initState();
+  }
+
+  void fetchTopStories() {
+    setState(() {
+      topStories = API.fetchTopStories();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,6 +93,7 @@ class _HomePageState extends State<HomePage> {
               Text(
                 "Putin promises grains, debt write-off as Russia seeks Africa allies",
                 style: AgcTextStyle.header3,
+                maxLines: 2,
               ),
               SizedBox(height: 30.0),
               Column(
