@@ -77,60 +77,92 @@ class _HomePageState extends State<HomePage> {
             children: [
               Text("TOP STORIES", style: AgcTextStyle.header1),
               SizedBox(height: 5.0),
-              AspectRatio(
-                aspectRatio: 1920 / 1080,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15.0),
-                  child: Image.asset(
-                    "assets/images/agcnewslogo.png",
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              SizedBox(height: 10.0),
-              Text("LATEST TODAY", style: AgcTextStyle.header2),
-              SizedBox(height: 5.0),
-              Text(
-                "Putin promises grains, debt write-off as Russia seeks Africa allies",
-                style: AgcTextStyle.header3,
-                maxLines: 2,
-              ),
-              SizedBox(height: 30.0),
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Flexible(
-                        flex: 1,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15.0),
-                          child: Image.asset(
-                            "assets/images/agcnewslogo.png",
-                            height: 100.0,
-                            width: 150.0,
-                            fit: BoxFit.cover,
+              FutureBuilder<List<TopStoriesActivity>>(
+                future: topStories,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(20.0),
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    final activities = snapshot.data!;
+                    return Column(
+                      children: [
+                        for (final activity in activities)
+                          Column(
+                            children: [
+                              AspectRatio(
+                                aspectRatio: 1920 / 1080,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  child: Image.asset(
+                                    "assets/images/agcnewslogo.png",
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: 10.0),
+                              Text("LATEST TODAY", style: AgcTextStyle.header2),
+                              SizedBox(height: 5.0),
+                              Text(
+                                "Putin promises grains, debt write-off as Russia seeks Africa allies",
+                                style: AgcTextStyle.header3,
+                                maxLines: 2,
+                              ),
+                              SizedBox(height: 30.0),
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Flexible(
+                                        flex: 1,
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(
+                                            15.0,
+                                          ),
+                                          child: Image.asset(
+                                            "assets/images/agcnewslogo.png",
+                                            height: 100.0,
+                                            width: 150.0,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 10.0),
+                                      Expanded(
+                                        flex: 2,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "NEWS TODAY",
+                                              style: AgcTextStyle.header2,
+                                            ),
+                                            SizedBox(height: 5.0),
+                                            Text(
+                                              "Putin promises grains, debt write-off as Russia seeks Africa allies",
+                                              style: AgcTextStyle.header3,
+                                              maxLines: 3,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
-                      SizedBox(width: 10.0),
-                      Expanded(
-                        flex: 2,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("NEWS TODAY", style: AgcTextStyle.header2),
-                            SizedBox(height: 5.0),
-                            Text(
-                              "Putin promises grains, debt write-off as Russia seeks Africa allies",
-                              style: AgcTextStyle.header3,
-                              maxLines: 3,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    );
+                  }
+                },
               ),
             ],
           ),
