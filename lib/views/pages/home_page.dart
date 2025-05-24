@@ -218,6 +218,17 @@ class _HomePageState extends State<HomePage> {
                                     ],
                                   ),
                                 ),
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    latestNews = API.fetchLatestNews(
+                                      perPage: 50,
+                                    );
+                                  });
+                                },
+                                icon: Icon(Icons.arrow_forward),
+                                iconSize: 40.0,
+                              ),
                             ],
                           ),
                         );
