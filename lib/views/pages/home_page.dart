@@ -96,25 +96,7 @@ class _HomePageState extends State<HomePage> {
                         for (final activity in activities)
                           Column(
                             children: [
-                              AspectRatio(
-                                aspectRatio: 1920 / 1080,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  child: Image.asset(
-                                    "assets/images/agcnewslogo.png",
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
                               SizedBox(height: 10.0),
-                              Text("LATEST TODAY", style: AgcTextStyle.header2),
-                              SizedBox(height: 5.0),
-                              Text(
-                                "Putin promises grains, debt write-off as Russia seeks Africa allies",
-                                style: AgcTextStyle.header3,
-                                maxLines: 2,
-                              ),
-                              SizedBox(height: 30.0),
                               Column(
                                 children: [
                                   Row(
@@ -125,8 +107,8 @@ class _HomePageState extends State<HomePage> {
                                           borderRadius: BorderRadius.circular(
                                             15.0,
                                           ),
-                                          child: Image.asset(
-                                            "assets/images/agcnewslogo.png",
+                                          child: Image.network(
+                                            activity.story.bannerImage,
                                             height: 100.0,
                                             width: 150.0,
                                             fit: BoxFit.cover,
@@ -141,12 +123,16 @@ class _HomePageState extends State<HomePage> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "NEWS TODAY",
+                                              activity
+                                                  .story
+                                                  .category
+                                                  .categoryName
+                                                  .toUpperCase(),
                                               style: AgcTextStyle.header2,
                                             ),
                                             SizedBox(height: 5.0),
                                             Text(
-                                              "Putin promises grains, debt write-off as Russia seeks Africa allies",
+                                              activity.story.title,
                                               style: AgcTextStyle.header3,
                                               maxLines: 3,
                                             ),
