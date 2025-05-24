@@ -14,5 +14,6 @@ class AgcTextStyle {
     fontSize: 20.0,
     fontWeight: FontWeight.w600,
     overflow: TextOverflow.ellipsis,
+    letterSpacing: 0.1,
   );
 }
