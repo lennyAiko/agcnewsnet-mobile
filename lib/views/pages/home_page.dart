@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(left: 15.0, right: 15.0, top: 10.0),
+          padding: const EdgeInsets.all(15.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -161,7 +161,58 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text("LATEST NEWS", style: AgcTextStyle.header1),
                   SizedBox(height: 5.0),
-                  Stack(children: []),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: Image.asset(
+                                "assets/images/agcnewslogo.png",
+                                height: 200.0,
+                                width: 250.0,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(height: 5.0),
+                            Text("AGC NEWS", style: AgcTextStyle.header2),
+                            SizedBox(height: 5.0),
+                            Text(
+                              "AGC NEWS",
+                              style: AgcTextStyle.header3,
+                              maxLines: 2,
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 10.0),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: Image.asset(
+                                "assets/images/agcnewslogo.png",
+                                height: 200.0,
+                                width: 250.0,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            SizedBox(height: 5.0),
+                            Text("AGC NEWS", style: AgcTextStyle.header2),
+                            SizedBox(height: 5.0),
+                            Text(
+                              "AGC NEWS",
+                              style: AgcTextStyle.header3,
+                              maxLines: 2,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ],
