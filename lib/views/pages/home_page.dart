@@ -1,4 +1,5 @@
 import 'package:agcnews/views/widgets/drawer_widget.dart';
+import 'package:agcnews/views/widgets/home/categories_widget.dart';
 import 'package:agcnews/views/widgets/home/editors_pick_widget.dart';
 import 'package:agcnews/views/widgets/home/latest_news_widget.dart';
 import 'package:agcnews/views/widgets/home/top_stories_widget.dart';
@@ -46,6 +47,8 @@ class HomePage extends StatelessWidget {
               LatestNewsWidget(),
               SizedBox(height: 20.0),
               EditorsPickWidget(),
+              SizedBox(height: 20.0),
+              CategoriesWidget(title: "Politics"),
             ],
           ),
         ),
