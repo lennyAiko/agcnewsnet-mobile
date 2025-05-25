@@ -1,6 +1,6 @@
 import 'package:agcnews/views/widgets/drawer_widget.dart';
-import 'package:agcnews/views/widgets/latest_news_widget.dart';
-import 'package:agcnews/views/widgets/top_stories_widget.dart';
+import 'package:agcnews/views/widgets/home/latest_news_widget.dart';
+import 'package:agcnews/views/widgets/home/top_stories_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
