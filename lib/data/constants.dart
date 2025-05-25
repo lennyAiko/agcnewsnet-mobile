@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AgcTextStyle {
   static const TextStyle header1 = TextStyle(
-    fontSize: 22.0,
+    fontSize: 20.0,
     fontWeight: FontWeight.w900,
   );
   static const TextStyle header2 = TextStyle(

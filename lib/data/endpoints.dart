@@ -50,7 +50,7 @@ class API {
 
   static Future<List<EditorsPickActivity>> fetchEditorsPick() async {
     final url = Uri.parse(
-      "https://api.agcnewsnet.com/api/general/editor-picks/?page=1&per_page=1",
+      "https://api.agcnewsnet.com/api/general/editor-picks/?page=1&per_page=5",
     );
 
     final response = await http.get(
