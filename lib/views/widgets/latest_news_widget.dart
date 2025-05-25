@@ -60,8 +60,8 @@ class _LatestNewsWidgetState extends State<LatestNewsWidget> {
                               borderRadius: BorderRadius.circular(15.0),
                               child: Image.network(
                                 activity.bannerImage,
-                                height: 250.0,
-                                width: 250.0,
+                                height: 200.0,
+                                width: 200.0,
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -72,7 +72,7 @@ class _LatestNewsWidgetState extends State<LatestNewsWidget> {
                             ),
                             SizedBox(height: 5.0),
                             SizedBox(
-                              width: 250.0,
+                              width: 200.0,
                               child: Text(
                                 activity.title,
                                 style: AgcTextStyle.header3,
