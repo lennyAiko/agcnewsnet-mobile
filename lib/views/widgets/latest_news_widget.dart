@@ -103,7 +103,7 @@ class _LatestNewsWidgetState extends State<LatestNewsWidget> {
                         );
                       },
                       icon: Icon(Icons.arrow_forward),
-                      iconSize: 40.0,
+                      iconSize: 35.0,
                     ),
                   ],
                 ),
