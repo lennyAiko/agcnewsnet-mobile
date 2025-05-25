@@ -40,10 +40,8 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Top Stories
               TopStoriesWidget(),
               SizedBox(height: 20.0),
-              // Latest News
               LatestNewsWidget(),
             ],
           ),
