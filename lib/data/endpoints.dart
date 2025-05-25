@@ -100,7 +100,7 @@ class API {
 
   static Future<List<MissedStoryActivity>> fetchMissedStories() async {
     final url = Uri.parse(
-      "https://api.agcnewsnet.com/api/general/stories/missed-stories",
+      "https://api.agcnewsnet.com/api/general/stories/missed-stories?page=1&per_page=5",
     );
 
     final response = await http.get(

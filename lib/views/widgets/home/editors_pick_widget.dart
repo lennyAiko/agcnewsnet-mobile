@@ -41,6 +41,7 @@ class _EditorsPickWidgetState extends State<EditorsPickWidget> {
           return Text('Error: ${snapshot.error}');
         } else {
           final firstActivity = snapshot.data!.first;
+          final otherActivities = snapshot.data!.sublist(1);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -123,31 +124,27 @@ class _EditorsPickWidgetState extends State<EditorsPickWidget> {
               Text("More Stories", style: AgcTextStyle.header1),
               Column(
                 children: [
-                  for (final activity in snapshot.data!.sublist(1))
+                  for (final activity in otherActivities)
                     Column(
                       children: [
-                        SizedBox(height: 10.0),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.square,
-                              size: 18.0,
-                              color: Colors.red[600],
+                        ListTile(
+                          leading: Icon(
+                            Icons.square,
+                            size: 18.0,
+                            color: Colors.red[600],
+                          ),
+                          title: Text(
+                            activity.story!.title ?? "",
+                            style: TextStyle(
+                              fontSize: 15.0,
+                              fontWeight: FontWeight.w500,
+                              overflow: TextOverflow.ellipsis,
+                              letterSpacing: 0.1,
                             ),
-                            SizedBox(width: 4.0),
-                            Expanded(
-                              flex: 3,
-                              child: Text(
-                                activity.story!.title ?? "",
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.w500,
-                                  overflow: TextOverflow.ellipsis,
-                                  letterSpacing: 0.1,
-                                ),
-                              ),
-                            ),
-                          ],
+                          ),
+                          onTap: () {
+                            // Handle tap on the activity
+                          },
                         ),
                       ],
                     ),

@@ -40,7 +40,7 @@ class _MissedStoriesWidgetState extends State<MissedStoriesWidget> {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          final activities = snapshot.data!;
+          final activities = snapshot.data!.sublist(0, 5);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -54,6 +54,29 @@ class _MissedStoriesWidgetState extends State<MissedStoriesWidget> {
                 ],
               ),
               SizedBox(height: 5.0),
+              Column(
+                children:
+                    activities.map((activity) {
+                      return ListTile(
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                            activity.bannerImage ?? "",
+                          ),
+                        ),
+                        title: Text(
+                          activity.title ?? "",
+                          style: AgcTextStyle.header3,
+                        ),
+                        subtitle: Text(
+                          activity.description ?? "",
+                          style: AgcTextStyle.description,
+                        ),
+                        onTap: () {
+                          // Handle tap on the activity
+                        },
+                      );
+                    }).toList(),
+              ),
             ],
           );
         }
