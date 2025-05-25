@@ -28,7 +28,7 @@ class API {
     final url = Uri.parse(
       "https://api.agcnewsnet.com/api/general/stories/latest-stories?page=$page&per_page=5",
     );
-    print(url);
+
     final response = await http.get(
       url,
       headers: {
