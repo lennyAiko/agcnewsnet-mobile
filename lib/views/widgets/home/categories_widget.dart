@@ -4,9 +4,10 @@ import 'package:agcnews/data/endpoints.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesWidget extends StatefulWidget {
-  const CategoriesWidget({super.key, required this.title});
+  const CategoriesWidget({super.key, required this.title, required this.id});
 
   final String title;
+  final int id;
 
   @override
   State<CategoriesWidget> createState() => _CategoriesWidgetState();
@@ -23,7 +24,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
 
   void fetchData() {
     setState(() {
-      category = API.fetchCategory();
+      category = API.fetchCategory(categoryId: widget.id);
     });
   }
 
