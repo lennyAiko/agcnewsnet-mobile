@@ -94,21 +94,21 @@ class _EditorsPickWidgetState extends State<EditorsPickWidget> {
                 ],
               ),
               SizedBox(height: 10.0),
-              Text(activity.story!.title ?? "", style: AgcTextStyle.header3),
+              Text(
+                activity.story!.title ?? "",
+                style: AgcTextStyle.header3,
+                maxLines: 2,
+              ),
               SizedBox(height: 5.0),
               Text(
                 activity.story!.description ?? "",
                 style: AgcTextStyle.description,
-                maxLines: 2,
+                maxLines: 3,
               ),
               SizedBox(height: 5.0),
               Row(
                 children: [
-                  Icon(
-                    Icons.person_outline,
-                    size: 20.0,
-                    color: Color.fromRGBO(248, 95, 208, 1),
-                  ),
+                  Icon(Icons.circle, size: 18.0, color: Colors.red[600]),
                   SizedBox(width: 3.0),
                   Text(
                     activity.story!.author ?? "",

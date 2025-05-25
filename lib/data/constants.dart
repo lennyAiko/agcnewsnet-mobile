@@ -11,7 +11,7 @@ class AgcTextStyle {
     color: Color.fromRGBO(248, 95, 208, 1),
   );
   static const TextStyle header3 = TextStyle(
-    fontSize: 20.0,
+    fontSize: 18.0,
     fontWeight: FontWeight.w600,
     overflow: TextOverflow.ellipsis,
     letterSpacing: 0.1,
