@@ -43,6 +43,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
           return Text('Error: ${snapshot.error}');
         } else {
           final firstActivity = snapshot.data!.first;
+          final otherActivities = snapshot.data!.sublist(1);
+          print(otherActivities.length);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -121,6 +123,57 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                     ],
                   ),
                   SizedBox(height: 15.0),
+                  Column(
+                    children: [
+                      for (final activity in otherActivities)
+                        Column(
+                          children: [
+                            SizedBox(height: 10.0),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 3.0),
+                                  child: Icon(
+                                    Icons.square,
+                                    size: 18.0,
+                                    color: Colors.red[600],
+                                  ),
+                                ),
+                                SizedBox(width: 4.0),
+                                Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                    activity.title ?? "",
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      fontWeight: FontWeight.w500,
+                                      overflow: TextOverflow.ellipsis,
+                                      letterSpacing: 0.1,
+                                    ),
+                                    maxLines: 3,
+                                  ),
+                                ),
+                                SizedBox(width: 10.0),
+                                Expanded(
+                                  flex: 2,
+                                  child: AspectRatio(
+                                    aspectRatio: 1920 / 1080,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      child: Image.network(
+                                        activity.bannerImage ?? "",
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                    ],
+                  ),
                 ],
               ),
             ],
