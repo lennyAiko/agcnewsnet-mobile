@@ -12,6 +12,8 @@ class LatestNewsWidget extends StatefulWidget {
 
 class _LatestNewsWidgetState extends State<LatestNewsWidget> {
   Future<List<LatestNewsActivity>>? latestNews;
+  int currentPage = 1;
+  List<LatestNewsActivity> latestNewsList = [];
 
   @override
   void initState() {
@@ -23,6 +25,11 @@ class _LatestNewsWidgetState extends State<LatestNewsWidget> {
     setState(() {
       latestNews = API.fetchLatestNews();
     });
+    latestNews!.then(
+      (value) => setState(() {
+        latestNewsList.addAll(value);
+      }),
+    );
   }
 
   @override
@@ -45,12 +52,11 @@ class _LatestNewsWidgetState extends State<LatestNewsWidget> {
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
-              final activities = snapshot.data!;
               return SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: [
-                    for (final activity in activities)
+                    for (final activity in latestNewsList)
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Column(
@@ -85,8 +91,16 @@ class _LatestNewsWidgetState extends State<LatestNewsWidget> {
                     IconButton(
                       onPressed: () {
                         setState(() {
-                          latestNews = API.fetchLatestNews(perPage: 50);
+                          latestNews = API.fetchLatestNews(
+                            page: currentPage + 1,
+                          );
                         });
+                        currentPage++;
+                        latestNews!.then(
+                          (value) => setState(() {
+                            latestNewsList.addAll(value);
+                          }),
+                        );
                       },
                       icon: Icon(Icons.arrow_forward),
                       iconSize: 40.0,

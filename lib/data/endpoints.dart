@@ -24,12 +24,11 @@ class API {
     }
   }
 
-  static Future<List<LatestNewsActivity>> fetchLatestNews({
-    perPage = 20,
-  }) async {
+  static Future<List<LatestNewsActivity>> fetchLatestNews({page = 1}) async {
     final url = Uri.parse(
-      "https://api.agcnewsnet.com/api/general/stories/latest-stories?page=1&per_page=$perPage",
+      "https://api.agcnewsnet.com/api/general/stories/latest-stories?page=$page&per_page=5",
     );
+    print(url);
     final response = await http.get(
       url,
       headers: {
