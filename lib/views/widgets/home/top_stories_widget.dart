@@ -1,6 +1,7 @@
 import 'package:agcnews/data/classes/top_stories_activity.dart';
 import 'package:agcnews/data/constants.dart';
 import 'package:agcnews/data/endpoints.dart';
+import 'package:agcnews/views/pages/story_page.dart';
 import 'package:flutter/material.dart';
 
 class TopStoriesWidget extends StatefulWidget {
@@ -49,51 +50,63 @@ class _TopStoriesWidgetState extends State<TopStoriesWidget> {
               return Column(
                 children: [
                   for (final activity in activities)
-                    Column(
-                      children: [
-                        SizedBox(height: 10.0),
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                Flexible(
-                                  flex: 1,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    child: Image.network(
-                                      activity.story.bannerImage,
-                                      height: 100.0,
-                                      width: 150.0,
-                                      fit: BoxFit.cover,
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) => StoryPage(storyId: activity.id),
+                          ),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          SizedBox(height: 10.0),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Flexible(
+                                    flex: 1,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                      child: Image.network(
+                                        activity.story.bannerImage,
+                                        height: 100.0,
+                                        width: 150.0,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(width: 10.0),
-                                Expanded(
-                                  flex: 2,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        activity.story.category.categoryName
-                                            .toUpperCase(),
-                                        style: AgcTextStyle.header2,
-                                      ),
-                                      SizedBox(height: 5.0),
-                                      Text(
-                                        activity.story.title,
-                                        style: AgcTextStyle.header3,
-                                        maxLines: 3,
-                                      ),
-                                    ],
+                                  SizedBox(width: 10.0),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          activity.story.category.categoryName
+                                              .toUpperCase(),
+                                          style: AgcTextStyle.header2,
+                                        ),
+                                        SizedBox(height: 5.0),
+                                        Text(
+                                          activity.story.title,
+                                          style: AgcTextStyle.header3,
+                                          maxLines: 3,
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
+                                ],
+                              ),
+                              SizedBox(height: 10.0),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                 ],
               );
