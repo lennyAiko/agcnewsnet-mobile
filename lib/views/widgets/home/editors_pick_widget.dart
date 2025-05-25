@@ -120,7 +120,7 @@ class _EditorsPickWidgetState extends State<EditorsPickWidget> {
                   ),
                 ],
               ),
-              SizedBox(height: 15.0),
+              SizedBox(height: 20.0),
               Text("More Stories", style: AgcTextStyle.header1),
               Column(
                 children: [
