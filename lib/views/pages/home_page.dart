@@ -2,6 +2,7 @@ import 'package:agcnews/views/widgets/drawer_widget.dart';
 import 'package:agcnews/views/widgets/home/categories_widget.dart';
 import 'package:agcnews/views/widgets/home/editors_pick_widget.dart';
 import 'package:agcnews/views/widgets/home/latest_news_widget.dart';
+import 'package:agcnews/views/widgets/home/missed_stories_widget.dart';
 import 'package:agcnews/views/widgets/home/top_stories_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -56,9 +57,11 @@ class HomePage extends StatelessWidget {
               SizedBox(height: 25.0),
               CategoriesWidget(title: "Entertainment", id: 4),
               SizedBox(height: 25.0),
+              MissedStoriesWidget(),
+              SizedBox(height: 25.0),
               Text(
                 "© 2025 AGC Newsnet. All Rights Reserved.",
-                style: TextStyle(color: Colors.grey),
+                style: TextStyle(color: Colors.black54),
               ),
             ],
           ),

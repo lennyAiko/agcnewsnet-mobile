@@ -45,7 +45,6 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
         } else {
           final firstActivity = snapshot.data!.first;
           final otherActivities = snapshot.data!.sublist(1);
-          print(otherActivities.length);
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
