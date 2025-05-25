@@ -1,3 +1,4 @@
+import 'package:agcnews/data/classes/editors_pick_activity.dart';
 import 'package:agcnews/data/classes/latest_news_activity.dart';
 import 'package:agcnews/data/classes/top_stories_activity.dart';
 import 'package:http/http.dart' as http;
@@ -42,6 +43,31 @@ class API {
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = jsonDecode(response.body)['data']['data'];
       return jsonData.map((item) => LatestNewsActivity.fromJson(item)).toList();
+    } else {
+      throw Exception('Failed to load activity');
+    }
+  }
+
+  static Future<List<EditorsPickActivity>> fetchEditorsPick() async {
+    final url = Uri.parse(
+      "https://api.agcnewsnet.com/api/general/editor-picks/?page=1&per_page=1",
+    );
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
+
+    print(jsonDecode(response.body)['message']);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(response.body)['data']['data'];
+      return jsonData
+          .map((item) => EditorsPickActivity.fromJson(item))
+          .toList();
     } else {
       throw Exception('Failed to load activity');
     }

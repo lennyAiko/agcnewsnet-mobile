@@ -16,4 +16,10 @@ class AgcTextStyle {
     overflow: TextOverflow.ellipsis,
     letterSpacing: 0.1,
   );
+  static const TextStyle description = TextStyle(
+    fontSize: 15.0,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    letterSpacing: 0.1,
+  );
 }
