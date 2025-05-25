@@ -1,4 +1,5 @@
 import 'package:agcnews/views/widgets/drawer_widget.dart';
+import 'package:agcnews/views/widgets/home/editors_pick_widget.dart';
 import 'package:agcnews/views/widgets/home/latest_news_widget.dart';
 import 'package:agcnews/views/widgets/home/top_stories_widget.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,8 @@ class HomePage extends StatelessWidget {
               TopStoriesWidget(),
               SizedBox(height: 20.0),
               LatestNewsWidget(),
+              SizedBox(height: 20.0),
+              EditorsPickWidget(),
             ],
           ),
         ),
