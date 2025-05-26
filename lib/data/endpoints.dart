@@ -1,4 +1,5 @@
 import 'package:agcnews/data/classes/category_activity.dart';
+import 'package:agcnews/data/classes/category_type_activity.dart';
 import 'package:agcnews/data/classes/editors_pick_activity.dart';
 import 'package:agcnews/data/classes/latest_news_activity.dart';
 import 'package:agcnews/data/classes/missed_stories_activities.dart';
@@ -140,6 +141,29 @@ class API {
 
     if (response.statusCode == 200) {
       return MissedStoryActivity.fromJson(jsonDecode(response.body)['data']);
+    } else {
+      throw Exception('Failed to load activity');
+    }
+  }
+
+  static Future<List<CategoryTypeActivity>> fetchCategories() async {
+    final url = Uri.parse("https://api.agcnewsnet.com/api/general/categories");
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
+
+    print(jsonDecode(response.body)['message']);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(response.body)['data']['data'];
+      return jsonData
+          .map((item) => CategoryTypeActivity.fromJson(item))
+          .toList();
     } else {
       throw Exception('Failed to load activity');
     }
