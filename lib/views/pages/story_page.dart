@@ -14,10 +14,10 @@ class StoryPage extends StatefulWidget {
 
 class _StoryPageState extends State<StoryPage> {
   Future<MissedStoryActivity>? story;
+  Future<List<MissedStoryActivity>>? missedStories;
 
   @override
   void initState() {
-    print(widget.storyId);
     fetchData();
     super.initState();
   }
@@ -25,6 +25,7 @@ class _StoryPageState extends State<StoryPage> {
   void fetchData() {
     setState(() {
       story = API.fetchStory(storyId: widget.storyId);
+      missedStories = API.fetchMissedStories();
     });
   }
 
@@ -55,6 +56,7 @@ class _StoryPageState extends State<StoryPage> {
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 10.0),
                     Text(activity.title ?? "", style: AgcTextStyle.header1),
@@ -119,6 +121,56 @@ class _StoryPageState extends State<StoryPage> {
                           margin: Margins.only(bottom: 10, top: -20),
                           padding: HtmlPaddings.all(2),
                         ),
+                      },
+                    ),
+                    Text("More Stories", style: AgcTextStyle.header1),
+                    SizedBox(height: 15.0),
+                    FutureBuilder(
+                      future: missedStories,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        } else {
+                          final otherActivities = snapshot.data!;
+                          return Column(
+                            children: [
+                              for (final activity in otherActivities)
+                                Column(
+                                  children: [
+                                    ListTile(
+                                      contentPadding: EdgeInsets.all(0),
+                                      dense: true,
+                                      leading: Icon(
+                                        Icons.square,
+                                        size: 18.0,
+                                        color: Colors.red[600],
+                                      ),
+                                      title: Text(
+                                        activity.title ?? "",
+                                        style: TextStyle(
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w500,
+                                          overflow: TextOverflow.ellipsis,
+                                          letterSpacing: 0.1,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        // Handle tap on the activity
+                                      },
+                                    ),
+                                  ],
+                                ),
+                            ],
+                          );
+                        }
                       },
                     ),
                   ],

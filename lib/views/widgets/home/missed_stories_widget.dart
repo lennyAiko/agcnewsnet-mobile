@@ -58,6 +58,8 @@ class _MissedStoriesWidgetState extends State<MissedStoriesWidget> {
                 children:
                     activities.map((activity) {
                       return ListTile(
+                        contentPadding: EdgeInsets.all(0),
+                        dense: true,
                         leading: CircleAvatar(
                           backgroundImage: NetworkImage(
                             activity.bannerImage ?? "",
