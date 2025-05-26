@@ -175,6 +175,13 @@ class _StoryPageState extends State<StoryPage> {
                         }
                       },
                     ),
+                    SizedBox(height: 25.0),
+                    Center(
+                      child: Text(
+                        "© 2025 AGC Newsnet. All Rights Reserved.",
+                        style: TextStyle(color: Colors.black54),
+                      ),
+                    ),
                   ],
                 ),
               ),
