@@ -56,7 +56,8 @@ class _TopStoriesWidgetState extends State<TopStoriesWidget> {
                           context,
                           MaterialPageRoute(
                             builder:
-                                (context) => StoryPage(storyId: activity.id),
+                                (context) =>
+                                    StoryPage(storyId: activity.story.id),
                           ),
                         );
                       },
