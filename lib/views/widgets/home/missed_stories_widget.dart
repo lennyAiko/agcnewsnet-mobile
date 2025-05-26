@@ -53,7 +53,6 @@ class _MissedStoriesWidgetState extends State<MissedStoriesWidget> {
                   ),
                 ],
               ),
-              SizedBox(height: 5.0),
               Column(
                 children:
                     activities.map((activity) {

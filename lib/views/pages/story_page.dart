@@ -120,11 +120,12 @@ class _StoryPageState extends State<StoryPage> {
                         "*": Style(
                           margin: Margins.only(bottom: 10, top: -20),
                           padding: HtmlPaddings.all(2),
+                          fontSize: FontSize(14.0),
                         ),
                       },
                     ),
-                    Text("More Stories", style: AgcTextStyle.header1),
                     SizedBox(height: 15.0),
+                    Text("More Stories", style: AgcTextStyle.header3),
                     FutureBuilder(
                       future: missedStories,
                       builder: (context, snapshot) {
@@ -156,7 +157,7 @@ class _StoryPageState extends State<StoryPage> {
                                       title: Text(
                                         activity.title ?? "",
                                         style: TextStyle(
-                                          fontSize: 15.0,
+                                          fontSize: 14.0,
                                           fontWeight: FontWeight.w500,
                                           overflow: TextOverflow.ellipsis,
                                           letterSpacing: 0.1,
