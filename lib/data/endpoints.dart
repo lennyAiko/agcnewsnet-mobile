@@ -154,6 +154,7 @@ class API {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        'Cache-Control': 'max-age=3600',
       },
     );
 
