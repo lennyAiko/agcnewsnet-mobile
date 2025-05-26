@@ -119,11 +119,12 @@ class _StoryPageState extends State<StoryPage> {
                       ),
                       softWrap: true,
                     ),
+                    SizedBox(height: 15.0),
                     Html(
                       data: activity.content ?? "",
                       style: {
                         "*": Style(
-                          margin: Margins.only(bottom: 10, top: -20),
+                          margin: Margins.only(bottom: 10, top: 0),
                           padding: HtmlPaddings.all(2),
                           fontSize: FontSize(14.0),
                         ),

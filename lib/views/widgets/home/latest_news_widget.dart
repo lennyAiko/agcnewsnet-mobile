@@ -1,6 +1,7 @@
 import 'package:agcnews/data/classes/latest_news_activity.dart';
 import 'package:agcnews/data/constants.dart';
 import 'package:agcnews/data/endpoints.dart';
+import 'package:agcnews/views/pages/story_page.dart';
 import 'package:flutter/material.dart';
 
 class LatestNewsWidget extends StatefulWidget {
@@ -59,33 +60,46 @@ class _LatestNewsWidgetState extends State<LatestNewsWidget> {
                     for (final activity in latestNewsList)
                       Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(15.0),
-                              child: Image.network(
-                                activity.bannerImage,
-                                height: 200.0,
+                        child: InkWell(
+                          hoverColor: Colors.transparent,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) =>
+                                        StoryPage(storyId: activity.id),
+                              ),
+                            );
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(15.0),
+                                child: Image.network(
+                                  activity.bannerImage,
+                                  height: 200.0,
+                                  width: 200.0,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              SizedBox(height: 5.0),
+                              Text(
+                                activity.category.categoryName.toUpperCase(),
+                                style: AgcTextStyle.header2,
+                              ),
+                              SizedBox(height: 5.0),
+                              SizedBox(
                                 width: 200.0,
-                                fit: BoxFit.cover,
+                                child: Text(
+                                  activity.title,
+                                  style: AgcTextStyle.header3,
+                                  maxLines: 2,
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 5.0),
-                            Text(
-                              activity.category.categoryName.toUpperCase(),
-                              style: AgcTextStyle.header2,
-                            ),
-                            SizedBox(height: 5.0),
-                            SizedBox(
-                              width: 200.0,
-                              child: Text(
-                                activity.title,
-                                style: AgcTextStyle.header3,
-                                maxLines: 2,
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     IconButton(
