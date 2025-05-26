@@ -171,7 +171,15 @@ class _StoryPageState extends State<StoryPage> {
                                         ),
                                       ),
                                       onTap: () {
-                                        // Handle tap on the activity
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder:
+                                                (context) => StoryPage(
+                                                  storyId: activity.id!,
+                                                ),
+                                          ),
+                                        );
                                       },
                                     ),
                                   ],

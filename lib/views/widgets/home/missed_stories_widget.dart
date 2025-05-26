@@ -1,6 +1,7 @@
 import 'package:agcnews/data/classes/missed_stories_activities.dart';
 import 'package:agcnews/data/constants.dart';
 import 'package:agcnews/data/endpoints.dart';
+import 'package:agcnews/views/pages/story_page.dart';
 import 'package:flutter/material.dart';
 
 class MissedStoriesWidget extends StatefulWidget {
@@ -73,7 +74,13 @@ class _MissedStoriesWidgetState extends State<MissedStoriesWidget> {
                           style: AgcTextStyle.description,
                         ),
                         onTap: () {
-                          // Handle tap on the activity
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => StoryPage(storyId: activity.id!),
+                            ),
+                          );
                         },
                       );
                     }).toList(),
