@@ -148,6 +148,7 @@ class _StoryPageState extends State<StoryPage> {
                                   children: [
                                     ListTile(
                                       contentPadding: EdgeInsets.all(0),
+                                      minLeadingWidth: 0,
                                       dense: true,
                                       leading: Icon(
                                         Icons.square,

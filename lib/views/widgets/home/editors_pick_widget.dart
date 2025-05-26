@@ -128,6 +128,9 @@ class _EditorsPickWidgetState extends State<EditorsPickWidget> {
                     Column(
                       children: [
                         ListTile(
+                          contentPadding: EdgeInsets.all(0),
+                          dense: true,
+                          minLeadingWidth: 0,
                           leading: Icon(
                             Icons.square,
                             size: 18.0,
