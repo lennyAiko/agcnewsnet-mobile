@@ -58,7 +58,12 @@ class _StoryPageState extends State<StoryPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 10.0),
+                    SizedBox(height: 5.0),
+                    Text(
+                      activity.category!.categoryName!.toUpperCase(),
+                      style: AgcTextStyle.header2,
+                    ),
+                    SizedBox(height: 5.0),
                     Text(activity.title ?? "", style: AgcTextStyle.header1),
                     SizedBox(height: 10.0),
                     Row(
