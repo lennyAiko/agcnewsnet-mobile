@@ -1,5 +1,6 @@
 import 'package:agcnews/data/classes/category_type_activity.dart';
 import 'package:agcnews/data/endpoints.dart';
+import 'package:agcnews/views/pages/article_page.dart';
 import 'package:agcnews/views/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -33,20 +34,20 @@ class _DrawerWidgetState extends State<DrawerWidget> {
       child: ListView(
         children: [
           SizedBox(height: 20.0),
-          ListTile(
-            title: Text("Home", style: TextStyle(fontSize: 15.0)),
-            leading: Icon(Icons.home),
-            onTap: () {
-              Navigator.pop(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return HomePage();
-                  },
-                ),
-              );
-            },
-          ),
+          // ListTile(
+          //   title: Text("Home", style: TextStyle(fontSize: 15.0)),
+          //   leading: Icon(Icons.home),
+          //   onTap: () {
+          //     Navigator.pop(
+          //       context,
+          //       MaterialPageRoute(
+          //         builder: (context) {
+          //           return HomePage();
+          //         },
+          //       ),
+          //     );
+          //   },
+          // ),
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: Text(
@@ -55,13 +56,19 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             ),
           ),
           ListTile(
-            title: Text("Audio", style: TextStyle(fontSize: 15.0)),
-            leading: Icon(Icons.audio_file),
-            onTap: () {},
-          ),
-          ListTile(
             title: Text("Articles", style: TextStyle(fontSize: 15.0)),
             leading: Icon(Icons.article),
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ArticlePage()),
+              );
+            },
+          ),
+          ListTile(
+            title: Text("Audio", style: TextStyle(fontSize: 15.0)),
+            leading: Icon(Icons.audio_file),
             onTap: () {},
           ),
           ListTile(
