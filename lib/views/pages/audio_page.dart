@@ -5,14 +5,14 @@ import 'package:agcnews/views/pages/story_page.dart';
 import 'package:agcnews/views/widgets/home/footer_widget.dart';
 import 'package:flutter/material.dart';
 
-class ArticlePage extends StatefulWidget {
-  const ArticlePage({super.key});
+class AudioPage extends StatefulWidget {
+  const AudioPage({super.key});
 
   @override
-  State<ArticlePage> createState() => _ArticlePageState();
+  State<AudioPage> createState() => _AudioPageState();
 }
 
-class _ArticlePageState extends State<ArticlePage> {
+class _AudioPageState extends State<AudioPage> {
   Future<List<LatestArticleActivity>>? latestArticles;
   Future<List<LatestArticleActivity>>? articles;
   int currentPage = 1;
@@ -26,7 +26,7 @@ class _ArticlePageState extends State<ArticlePage> {
 
   void fetchData() {
     setState(() {
-      latestArticles = API.fetchLatestArticles();
+      latestArticles = API.fetchLatestAudios();
     });
     latestArticles!.then(
       (value) => setState(() {
@@ -39,7 +39,7 @@ class _ArticlePageState extends State<ArticlePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Articles"),
+        title: Text("Audios"),
         centerTitle: true,
         backgroundColor: Colors.black87,
         foregroundColor: Colors.white,
@@ -61,7 +61,7 @@ class _ArticlePageState extends State<ArticlePage> {
               return Center(
                 child: Padding(
                   padding: EdgeInsets.all(20.0),
-                  child: Text("No Articles", style: AgcTextStyle.header2),
+                  child: Text("No Audios", style: AgcTextStyle.header2),
                 ),
               );
             } else {
@@ -267,7 +267,7 @@ class _ArticlePageState extends State<ArticlePage> {
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    articles = API.fetchLatestArticles(
+                                    articles = API.fetchLatestAudios(
                                       page: currentPage + 1,
                                     );
                                   });
