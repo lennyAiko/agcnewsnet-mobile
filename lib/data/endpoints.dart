@@ -226,4 +226,60 @@ class API {
       throw Exception('Failed to load activity');
     }
   }
+
+  static Future<List<LatestArticleActivity>> fetchLatestVideos({
+    page = 1,
+  }) async {
+    final url = Uri.parse(
+      "https://api.agcnewsnet.com/api/general/stories?page=$page&per_page=5&status=published&type=video",
+    );
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Cache-Control': 'max-age=3600',
+      },
+    );
+
+    print(jsonDecode(response.body)['message']);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(response.body)['data']['data'];
+      return jsonData
+          .map((item) => LatestArticleActivity.fromJson(item))
+          .toList();
+    } else {
+      throw Exception('Failed to load activity');
+    }
+  }
+
+  static Future<List<LatestArticleActivity>> fetchLatestPictures({
+    page = 1,
+  }) async {
+    final url = Uri.parse(
+      "https://api.agcnewsnet.com/api/general/stories?page=$page&per_page=5&status=published&type=picture",
+    );
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Cache-Control': 'max-age=3600',
+      },
+    );
+
+    print(jsonDecode(response.body)['message']);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(response.body)['data']['data'];
+      return jsonData
+          .map((item) => LatestArticleActivity.fromJson(item))
+          .toList();
+    } else {
+      throw Exception('Failed to load activity');
+    }
+  }
 }
