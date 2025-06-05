@@ -1,6 +1,7 @@
 import 'package:agcnews/data/classes/missed_stories_activities.dart';
 import 'package:agcnews/data/constants.dart';
 import 'package:agcnews/data/endpoints.dart';
+import 'package:agcnews/views/widgets/home/footer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -190,12 +191,7 @@ class _StoryPageState extends State<StoryPage> {
                       },
                     ),
                     SizedBox(height: 25.0),
-                    Center(
-                      child: Text(
-                        "© 2025 AGC Newsnet. All Rights Reserved.",
-                        style: TextStyle(color: Colors.black54),
-                      ),
-                    ),
+                    FooterWidget(),
                   ],
                 ),
               ),

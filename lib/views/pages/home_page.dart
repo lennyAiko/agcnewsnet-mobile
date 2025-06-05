@@ -1,6 +1,7 @@
 import 'package:agcnews/views/widgets/drawer_widget.dart';
 import 'package:agcnews/views/widgets/home/categories_widget.dart';
 import 'package:agcnews/views/widgets/home/editors_pick_widget.dart';
+import 'package:agcnews/views/widgets/home/footer_widget.dart';
 import 'package:agcnews/views/widgets/home/latest_news_widget.dart';
 import 'package:agcnews/views/widgets/home/missed_stories_widget.dart';
 import 'package:agcnews/views/widgets/home/top_stories_widget.dart';
@@ -59,10 +60,7 @@ class HomePage extends StatelessWidget {
               SizedBox(height: 25.0),
               MissedStoriesWidget(),
               SizedBox(height: 25.0),
-              Text(
-                "© 2025 AGC Newsnet. All Rights Reserved.",
-                style: TextStyle(color: Colors.black54),
-              ),
+              FooterWidget(),
             ],
           ),
         ),
