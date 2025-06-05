@@ -2,6 +2,7 @@ import 'package:agcnews/data/classes/latest_article_activity.dart';
 import 'package:agcnews/data/constants.dart';
 import 'package:agcnews/data/endpoints.dart';
 import 'package:agcnews/views/pages/story_page.dart';
+import 'package:agcnews/views/widgets/home/footer_widget.dart';
 import 'package:flutter/material.dart';
 
 class ArticlePage extends StatefulWidget {
@@ -13,6 +14,8 @@ class ArticlePage extends StatefulWidget {
 
 class _ArticlePageState extends State<ArticlePage> {
   Future<List<LatestArticleActivity>>? latestArticles;
+  int currentPage = 1;
+  List<LatestArticleActivity> latestArticlesList = [];
 
   @override
   void initState() {
@@ -24,6 +27,11 @@ class _ArticlePageState extends State<ArticlePage> {
     setState(() {
       latestArticles = API.fetchLatestArticles();
     });
+    latestArticles!.then(
+      (value) => setState(() {
+        latestArticlesList.addAll(value);
+      }),
+    );
   }
 
   @override
@@ -49,7 +57,8 @@ class _ArticlePageState extends State<ArticlePage> {
             return Text('Error: ${snapshot.error}');
           } else {
             final firstActivity = snapshot.data!.first;
-            final otherActivities = snapshot.data!.sublist(1);
+            // final otherActivities = snapshot.data!.sublist(1);
+            final otherActivities = latestArticlesList.sublist(1);
             return SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.all(15.0),
@@ -190,41 +199,72 @@ class _ArticlePageState extends State<ArticlePage> {
                     ),
                     SizedBox(height: 40.0),
                     for (final activity in otherActivities)
-                      InkWell(
-                        hoverColor: Colors.transparent,
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) => StoryPage(storyId: activity.id),
+                      Column(
+                        children: [
+                          InkWell(
+                            hoverColor: Colors.transparent,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder:
+                                      (context) =>
+                                          StoryPage(storyId: activity.id),
+                                ),
+                              );
+                            },
+                            child: Column(
+                              children: [
+                                AspectRatio(
+                                  aspectRatio: 2140 / 1080,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: Image.network(
+                                      activity.bannerImage,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  activity.title,
+                                  style: TextStyle(
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 2,
+                                ),
+                              ],
                             ),
+                          ),
+                          SizedBox(height: 25.0),
+                        ],
+                      ),
+                    Center(
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(Colors.pink),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            latestArticles = API.fetchLatestArticles(
+                              page: currentPage + 1,
+                            );
+                          });
+                          currentPage++;
+                          latestArticles!.then(
+                            (value) => setState(() {
+                              latestArticlesList.addAll(value);
+                            }),
                           );
                         },
-                        child: Column(
-                          children: [
-                            AspectRatio(
-                              aspectRatio: 2140 / 1080,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(10.0),
-                                child: Image.network(
-                                  activity.bannerImage,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            Text(
-                              activity.title,
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              maxLines: 2,
-                            ),
-                            SizedBox(height: 25.0),
-                          ],
+                        child: Text(
+                          "Load more",
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
+                    ),
+                    SizedBox(height: 25.0),
+                    FooterWidget(),
                   ],
                 ),
               ),
