@@ -60,6 +60,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             onTap: () {},
           ),
           ListTile(
+            title: Text("Articles", style: TextStyle(fontSize: 15.0)),
+            leading: Icon(Icons.article),
+            onTap: () {},
+          ),
+          ListTile(
             title: Text("Video", style: TextStyle(fontSize: 15.0)),
             leading: Icon(Icons.video_camera_back),
             onTap: () {},
