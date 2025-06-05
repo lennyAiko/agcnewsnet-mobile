@@ -1,6 +1,7 @@
 import 'package:agcnews/data/classes/category_activity.dart';
 import 'package:agcnews/data/classes/category_type_activity.dart';
 import 'package:agcnews/data/classes/editors_pick_activity.dart';
+import 'package:agcnews/data/classes/latest_article_activity.dart';
 import 'package:agcnews/data/classes/latest_news_activity.dart';
 import 'package:agcnews/data/classes/missed_stories_activities.dart';
 import 'package:agcnews/data/classes/top_stories_activity.dart';
@@ -164,6 +165,34 @@ class API {
       final List<dynamic> jsonData = jsonDecode(response.body)['data']['data'];
       return jsonData
           .map((item) => CategoryTypeActivity.fromJson(item))
+          .toList();
+    } else {
+      throw Exception('Failed to load activity');
+    }
+  }
+
+  static Future<List<LatestArticleActivity>> fetchLatestArticles({
+    page = 1,
+  }) async {
+    final url = Uri.parse(
+      "https://api.agcnewsnet.com/api/general/stories?page=$page&per_page=5&status=published&type=article",
+    );
+
+    final response = await http.get(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Cache-Control': 'max-age=3600',
+      },
+    );
+
+    print(jsonDecode(response.body)['message']);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = jsonDecode(response.body)['data']['data'];
+      return jsonData
+          .map((item) => LatestArticleActivity.fromJson(item))
           .toList();
     } else {
       throw Exception('Failed to load activity');

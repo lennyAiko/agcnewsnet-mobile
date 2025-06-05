@@ -1,4 +1,7 @@
+import 'package:agcnews/data/classes/latest_article_activity.dart';
 import 'package:agcnews/data/constants.dart';
+import 'package:agcnews/data/endpoints.dart';
+import 'package:agcnews/views/pages/story_page.dart';
 import 'package:flutter/material.dart';
 
 class ArticlePage extends StatefulWidget {
@@ -9,6 +12,20 @@ class ArticlePage extends StatefulWidget {
 }
 
 class _ArticlePageState extends State<ArticlePage> {
+  Future<List<LatestArticleActivity>>? latestArticles;
+
+  @override
+  void initState() {
+    fetchData();
+    super.initState();
+  }
+
+  void fetchData() {
+    setState(() {
+      latestArticles = API.fetchLatestArticles();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,18 +35,145 @@ class _ArticlePageState extends State<ArticlePage> {
         backgroundColor: Colors.black87,
         foregroundColor: Colors.white,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 5.0),
-              Text("Latest Articles", style: AgcTextStyle.header1),
-              SizedBox(height: 5.0),
-            ],
-          ),
-        ),
+      body: FutureBuilder(
+        future: latestArticles,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Padding(
+                padding: EdgeInsets.all(20.0),
+                child: CircularProgressIndicator(),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            final firstActivity = snapshot.data!.first;
+            final otherActivities = snapshot.data!.sublist(1);
+            return SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 5.0),
+                    Text("Latest in Article", style: AgcTextStyle.header1),
+                    SizedBox(height: 5.0),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              hoverColor: Colors.transparent,
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (context) => StoryPage(
+                                          storyId: firstActivity.id,
+                                        ),
+                                  ),
+                                );
+                              },
+                              child: Column(
+                                children: [
+                                  Stack(
+                                    alignment: Alignment.topLeft,
+                                    children: [
+                                      Hero(
+                                        tag: "latestArticle",
+                                        child: AspectRatio(
+                                          aspectRatio: 1920 / 1080,
+                                          child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                              10.0,
+                                            ),
+                                            child: Image.network(
+                                              firstActivity.bannerImage,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      FittedBox(
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(15.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: Colors.white,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(30.0),
+                                              color: Colors.pink,
+                                            ),
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Text(
+                                              firstActivity
+                                                  .category
+                                                  .categoryName,
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 13.0,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10.0),
+                                  Text(
+                                    firstActivity.title,
+                                    style: AgcTextStyle.header3,
+                                    maxLines: 2,
+                                  ),
+                                  SizedBox(height: 10.0),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Posted on ${DateTime.parse(firstActivity.createdAt!.toString()).day}${AgcDate.getDaySuffix(DateTime.parse(firstActivity.createdAt!.toString()).day)} ${AgcDate.months[DateTime.parse(firstActivity.createdAt!.toString()).month]} ${DateTime.parse(firstActivity.createdAt!.toString()).year}",
+                                        style: TextStyle(
+                                          fontSize: 12.0,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: 0.1,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Text(
+                                        "${AgcDate.calculateReadTime(firstActivity.content ?? "")} min(s) read",
+                                        style: TextStyle(
+                                          fontSize: 13.0,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: 0.1,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10.0),
+                                  Text(
+                                    firstActivity.description,
+                                    style: AgcTextStyle.description,
+                                    maxLines: 3,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        },
       ),
     );
   }
