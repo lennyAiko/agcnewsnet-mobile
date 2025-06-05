@@ -3,6 +3,8 @@ import 'package:agcnews/data/endpoints.dart';
 import 'package:agcnews/views/pages/article_page.dart';
 import 'package:agcnews/views/pages/audio_page.dart';
 import 'package:agcnews/views/pages/home_page.dart';
+import 'package:agcnews/views/pages/picture_page.dart';
+import 'package:agcnews/views/pages/video_page.dart';
 import 'package:flutter/material.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -81,12 +83,24 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           ListTile(
             title: Text("Video", style: TextStyle(fontSize: 15.0)),
             leading: Icon(Icons.video_camera_back),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => VideoPage()),
+              );
+            },
           ),
           ListTile(
             title: Text("Photos", style: TextStyle(fontSize: 15.0)),
             leading: Icon(Icons.photo),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pop();
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PicturePage()),
+              );
+            },
           ),
           Padding(
             padding: const EdgeInsets.all(10.0),
