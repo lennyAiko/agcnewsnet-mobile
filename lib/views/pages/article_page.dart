@@ -168,6 +168,63 @@ class _ArticlePageState extends State<ArticlePage> {
                         ),
                       ],
                     ),
+                    SizedBox(height: 15.0),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: WidgetStateProperty.all(Colors.pink),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder:
+                                (context) =>
+                                    StoryPage(storyId: firstActivity.id),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Read more",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    SizedBox(height: 40.0),
+                    for (final activity in otherActivities)
+                      InkWell(
+                        hoverColor: Colors.transparent,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => StoryPage(storyId: activity.id),
+                            ),
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            AspectRatio(
+                              aspectRatio: 2140 / 1080,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Image.network(
+                                  activity.bannerImage,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              activity.title,
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 2,
+                            ),
+                            SizedBox(height: 25.0),
+                          ],
+                        ),
+                      ),
                   ],
                 ),
               ),
