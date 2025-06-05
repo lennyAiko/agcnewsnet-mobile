@@ -14,6 +14,7 @@ class ArticlePage extends StatefulWidget {
 
 class _ArticlePageState extends State<ArticlePage> {
   Future<List<LatestArticleActivity>>? latestArticles;
+  Future<List<LatestArticleActivity>>? articles;
   int currentPage = 1;
   List<LatestArticleActivity> latestArticlesList = [];
 
@@ -246,12 +247,12 @@ class _ArticlePageState extends State<ArticlePage> {
                         ),
                         onPressed: () {
                           setState(() {
-                            latestArticles = API.fetchLatestArticles(
+                            articles = API.fetchLatestArticles(
                               page: currentPage + 1,
                             );
                           });
                           currentPage++;
-                          latestArticles!.then(
+                          articles!.then(
                             (value) => setState(() {
                               latestArticlesList.addAll(value);
                             }),

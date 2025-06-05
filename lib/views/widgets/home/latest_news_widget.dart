@@ -13,6 +13,7 @@ class LatestNewsWidget extends StatefulWidget {
 
 class _LatestNewsWidgetState extends State<LatestNewsWidget> {
   Future<List<LatestNewsActivity>>? latestNews;
+  Future<List<LatestNewsActivity>>? news;
   int currentPage = 1;
   List<LatestNewsActivity> latestNewsList = [];
 
@@ -102,22 +103,37 @@ class _LatestNewsWidgetState extends State<LatestNewsWidget> {
                           ),
                         ),
                       ),
-                    IconButton(
-                      onPressed: () {
-                        setState(() {
-                          latestNews = API.fetchLatestNews(
-                            page: currentPage + 1,
+                    FutureBuilder(
+                      future: news,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: CircularProgressIndicator(),
+                            ),
                           );
-                        });
-                        currentPage++;
-                        latestNews!.then(
-                          (value) => setState(() {
-                            latestNewsList.addAll(value);
-                          }),
-                        );
+                        } else {
+                          return IconButton(
+                            onPressed: () {
+                              setState(() {
+                                news = API.fetchLatestNews(
+                                  page: currentPage + 1,
+                                );
+                              });
+                              currentPage++;
+                              news!.then(
+                                (value) => setState(() {
+                                  latestNewsList.addAll(value);
+                                }),
+                              );
+                            },
+                            icon: Icon(Icons.arrow_forward),
+                            iconSize: 35.0,
+                          );
+                        }
                       },
-                      icon: Icon(Icons.arrow_forward),
-                      iconSize: 35.0,
                     ),
                   ],
                 ),
