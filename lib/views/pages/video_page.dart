@@ -26,7 +26,7 @@ class VideoPageState extends State<VideoPage> {
 
   void fetchData() {
     setState(() {
-      latestArticles = API.fetchLatestAudios();
+      latestArticles = API.fetchLatestVideos();
     });
     latestArticles!.then(
       (value) => setState(() {
@@ -39,7 +39,7 @@ class VideoPageState extends State<VideoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Audios"),
+        title: Text("Videos"),
         centerTitle: true,
         backgroundColor: Colors.black87,
         foregroundColor: Colors.white,
@@ -61,7 +61,7 @@ class VideoPageState extends State<VideoPage> {
               return Center(
                 child: Padding(
                   padding: EdgeInsets.all(20.0),
-                  child: Text("No Audios", style: AgcTextStyle.header2),
+                  child: Text("No Videos", style: AgcTextStyle.header2),
                 ),
               );
             } else {
@@ -267,7 +267,7 @@ class VideoPageState extends State<VideoPage> {
                                 ),
                                 onPressed: () {
                                   setState(() {
-                                    articles = API.fetchLatestAudios(
+                                    articles = API.fetchLatestVideos(
                                       page: currentPage + 1,
                                     );
                                   });
