@@ -240,29 +240,46 @@ class _ArticlePageState extends State<ArticlePage> {
                           SizedBox(height: 25.0),
                         ],
                       ),
-                    Center(
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: WidgetStateProperty.all(Colors.pink),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            articles = API.fetchLatestArticles(
-                              page: currentPage + 1,
-                            );
-                          });
-                          currentPage++;
-                          articles!.then(
-                            (value) => setState(() {
-                              latestArticlesList.addAll(value);
-                            }),
+                    FutureBuilder(
+                      future: articles,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(20.0),
+                              child: CircularProgressIndicator(),
+                            ),
                           );
-                        },
-                        child: Text(
-                          "Load more",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
+                        } else {
+                          return Center(
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor: WidgetStateProperty.all(
+                                  Colors.pink,
+                                ),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  articles = API.fetchLatestArticles(
+                                    page: currentPage + 1,
+                                  );
+                                });
+                                currentPage++;
+                                articles!.then(
+                                  (value) => setState(() {
+                                    latestArticlesList.addAll(value);
+                                  }),
+                                );
+                              },
+                              child: Text(
+                                "Load more",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          );
+                        }
+                      },
                     ),
                     SizedBox(height: 25.0),
                     FooterWidget(),
