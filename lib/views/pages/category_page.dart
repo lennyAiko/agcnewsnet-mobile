@@ -70,7 +70,10 @@ class _CategoryPageState extends State<CategoryPage> {
               return Center(
                 child: Padding(
                   padding: EdgeInsets.all(20.0),
-                  child: Text("No Pictures", style: AgcTextStyle.header2),
+                  child: Text(
+                    "No ${widget.categoryName}",
+                    style: AgcTextStyle.header2,
+                  ),
                 ),
               );
             } else {
@@ -83,7 +86,10 @@ class _CategoryPageState extends State<CategoryPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 5.0),
-                      Text("Latest in Article", style: AgcTextStyle.header1),
+                      Text(
+                        "Latest in ${widget.categoryName}",
+                        style: AgcTextStyle.header1,
+                      ),
                       SizedBox(height: 5.0),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
