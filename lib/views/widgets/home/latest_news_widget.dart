@@ -48,19 +48,32 @@ class _LatestNewsWidgetState extends State<LatestNewsWidget> {
               return SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     for (int i = 1; i <= 5; i++)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 100.0,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[900],
-                              borderRadius: BorderRadius.circular(15.0),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: 150.0,
+                              width: 150.0,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
                             ),
-                          ),
-                        ],
+                            SizedBox(height: 5.0),
+                            Container(
+                              height: 20.0,
+                              width: 150.0,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                   ],
                 ),
