@@ -314,7 +314,7 @@ class API {
 
   static Future<List<LatestArticleActivity>> searchStory({
     page = 1,
-    search = "",
+    search = "hello",
   }) async {
     final url = Uri.parse(
       "https://api.agcnewsnet.com/api/general/stories?page=$page&per_page=5&status=published&q=$search",
