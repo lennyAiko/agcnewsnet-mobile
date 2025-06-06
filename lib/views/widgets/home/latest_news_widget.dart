@@ -45,10 +45,24 @@ class _LatestNewsWidgetState extends State<LatestNewsWidget> {
           future: latestNews,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: CircularProgressIndicator(),
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    for (int i = 1; i <= 5; i++)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 100.0,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[900],
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
+                        ],
+                      ),
+                  ],
                 ),
               );
             } else if (snapshot.hasError) {
