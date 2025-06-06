@@ -48,10 +48,36 @@ class PicturePageState extends State<PicturePage> {
         future: latestArticles,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(20.0),
-                child: CircularProgressIndicator(),
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    for (int i = 0; i <= 3; i++)
+                      Column(
+                        children: [
+                          Container(
+                            height: 200.0,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
+                          SizedBox(height: 15.0),
+                          Container(
+                            height: 30.0,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
+                          SizedBox(height: 20.0),
+                        ],
+                      ),
+                  ],
+                ),
               ),
             );
           } else if (snapshot.hasError) {
