@@ -9,7 +9,30 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  Future<List<LatestArticleActivity>>? _searchResults;
+  Future<List<LatestArticleActivity>>? searchResults;
+  Future<List<LatestArticleActivity>>? results;
+  int currentPage = 1;
+  List<LatestArticleActivity> stories = [];
+
+  @override
+  void initState() {
+    fetchData();
+    super.initState();
+  }
+
+  void fetchData() {
+    setState(() {
+      latestArticles = API.fetchCategoryStories(
+        categoryId: widget.categoryId,
+        page: currentPage,
+      );
+    });
+    latestArticles!.then(
+      (value) => setState(() {
+        latestArticlesList.addAll(value);
+      }),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
