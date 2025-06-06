@@ -1,3 +1,4 @@
+import 'package:agcnews/views/pages/search_page.dart';
 import 'package:agcnews/views/widgets/drawer_widget.dart';
 import 'package:agcnews/views/widgets/home/categories_widget.dart';
 import 'package:agcnews/views/widgets/home/editors_pick_widget.dart';
@@ -26,15 +27,13 @@ class HomePage extends StatelessWidget {
             icon: Icon(Icons.search),
             onPressed: () {
               // Implement search functionality
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SearchPage()),
+              );
             },
           ),
           SizedBox(width: 10.0),
-          IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () {
-              // Implement notifications functionality
-            },
-          ),
         ],
       ),
       drawer: SafeArea(child: DrawerWidget()),
