@@ -40,7 +40,68 @@ class _TopStoriesWidgetState extends State<TopStoriesWidget> {
               return Center(
                 child: Padding(
                   padding: EdgeInsets.all(20.0),
-                  child: CircularProgressIndicator(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      for (int i = 1; i <= 3; i++)
+                        InkWell(
+                          onTap: () {},
+                          child: Column(
+                            children: [
+                              SizedBox(height: 10.0),
+                              Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Flexible(
+                                        flex: 1,
+                                        child: Container(
+                                          height: 100.0,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey[300],
+                                            borderRadius: BorderRadius.circular(
+                                              15.0,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 10.0),
+                                      Expanded(
+                                        flex: 2,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              height: 30.0,
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey[300],
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                              ),
+                                            ),
+                                            SizedBox(height: 5.0),
+                                            Container(
+                                              height: 50.0,
+                                              decoration: BoxDecoration(
+                                                color: Colors.grey[300],
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10.0),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               );
             } else if (snapshot.hasError) {
