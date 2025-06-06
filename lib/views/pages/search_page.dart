@@ -29,14 +29,19 @@ class _SearchPageState extends State<SearchPage> {
 
   void fetchData() {
     setState(() {
-      searchResults = API.searchStory(page: currentPage);
+      searchResults = API.searchStory(
+        page: currentPage,
+        search:
+            searchController.value.text.isEmpty
+                ? ' '
+                : searchController.value.text,
+      );
     });
     searchResults!.then(
       (value) => setState(() {
         stories.addAll(value);
       }),
     );
-    print(stories);
   }
 
   @override
@@ -52,14 +57,18 @@ class _SearchPageState extends State<SearchPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(15.0),
               child: TextField(
                 controller: searchController,
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  ),
                   hintText: 'Search',
                 ),
                 onSubmitted: (value) {
+                  currentPage = 1;
+                  stories.clear();
                   fetchData();
                 },
               ),
@@ -80,7 +89,7 @@ class _SearchPageState extends State<SearchPage> {
                   if (stories.isEmpty) {
                     searchWidget = Center(
                       child: Padding(
-                        padding: EdgeInsets.all(20.0),
+                        padding: EdgeInsets.all(30.0),
                         child: Text(
                           "No results found",
                           style: AgcTextStyle.header2,
@@ -160,6 +169,10 @@ class _SearchPageState extends State<SearchPage> {
                                     setState(() {
                                       results = API.searchStory(
                                         page: currentPage + 1,
+                                        search:
+                                            searchController.value.text.isEmpty
+                                                ? 'agcnews'
+                                                : searchController.value.text,
                                       );
                                     });
                                     currentPage++;
