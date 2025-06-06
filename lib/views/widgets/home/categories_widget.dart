@@ -35,10 +35,66 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
       future: category,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: Padding(
-              padding: EdgeInsets.all(20.0),
-              child: CircularProgressIndicator(),
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 200.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                Container(
+                  height: 30.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                Container(
+                  height: 20.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                Container(
+                  height: 20.0,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+                SizedBox(height: 20.0),
+                Column(
+                  children: [
+                    for (int i = 0; i <= 4; i++)
+                      Column(
+                        children: [
+                          Container(
+                            height: 25.0,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[300],
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                          ),
+                          SizedBox(height: 15.0),
+                        ],
+                      ),
+                  ],
+                ),
+              ],
             ),
           );
         } else if (snapshot.hasError) {

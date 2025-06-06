@@ -32,11 +32,23 @@ class _MissedStoriesWidgetState extends State<MissedStoriesWidget> {
       future: missedStories,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(
-            child: Padding(
-              padding: EdgeInsets.all(20.0),
-              child: CircularProgressIndicator(),
-            ),
+          return Column(
+            children: [
+              for (int i = 0; i <= 4; i++)
+                Column(
+                  children: [
+                    Container(
+                      height: 25.0,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[300],
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                    ),
+                    SizedBox(height: 15.0),
+                  ],
+                ),
+            ],
           );
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
