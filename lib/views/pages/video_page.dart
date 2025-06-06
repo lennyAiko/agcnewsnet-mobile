@@ -153,7 +153,7 @@ class VideoPageState extends State<VideoPage> {
                                     Row(
                                       children: [
                                         Text(
-                                          "Posted on ${DateTime.parse(firstActivity.createdAt!.toString()).day}${AgcDate.getDaySuffix(DateTime.parse(firstActivity.createdAt!.toString()).day)} ${AgcDate.months[DateTime.parse(firstActivity.createdAt!.toString()).month]} ${DateTime.parse(firstActivity.createdAt!.toString()).year}",
+                                          "Posted on ${DateTime.parse(firstActivity.createdAt.toString()).day}${AgcDate.getDaySuffix(DateTime.parse(firstActivity.createdAt.toString()).day)} ${AgcDate.months[DateTime.parse(firstActivity.createdAt.toString()).month]} ${DateTime.parse(firstActivity.createdAt.toString()).year}",
                                           style: TextStyle(
                                             fontSize: 12.0,
                                             fontWeight: FontWeight.w400,
@@ -162,7 +162,7 @@ class VideoPageState extends State<VideoPage> {
                                         ),
                                         Spacer(),
                                         Text(
-                                          "${AgcDate.calculateReadTime(firstActivity.content ?? "")} min(s) read",
+                                          "${AgcDate.calculateReadTime(firstActivity.content)} min(s) read",
                                           style: TextStyle(
                                             fontSize: 13.0,
                                             fontWeight: FontWeight.w400,

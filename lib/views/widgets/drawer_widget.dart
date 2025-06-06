@@ -3,7 +3,6 @@ import 'package:agcnews/data/endpoints.dart';
 import 'package:agcnews/views/pages/article_page.dart';
 import 'package:agcnews/views/pages/audio_page.dart';
 import 'package:agcnews/views/pages/category_page.dart';
-import 'package:agcnews/views/pages/home_page.dart';
 import 'package:agcnews/views/pages/picture_page.dart';
 import 'package:agcnews/views/pages/video_page.dart';
 import 'package:flutter/material.dart';
