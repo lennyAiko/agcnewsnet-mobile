@@ -2,6 +2,7 @@ import 'package:agcnews/data/classes/category_type_activity.dart';
 import 'package:agcnews/data/endpoints.dart';
 import 'package:agcnews/views/pages/article_page.dart';
 import 'package:agcnews/views/pages/audio_page.dart';
+import 'package:agcnews/views/pages/category_page.dart';
 import 'package:agcnews/views/pages/home_page.dart';
 import 'package:agcnews/views/pages/picture_page.dart';
 import 'package:agcnews/views/pages/video_page.dart';
@@ -132,7 +133,19 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           style: TextStyle(fontSize: 15.0),
                         ),
                         leading: Icon(Icons.category),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder:
+                                  (context) => CategoryPage(
+                                    categoryName: activity.categoryName,
+                                    categoryId: activity.categoryId,
+                                  ),
+                            ),
+                          );
+                        },
                       ),
                   ],
                 );
