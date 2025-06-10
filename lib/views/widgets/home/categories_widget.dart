@@ -5,7 +5,14 @@ import 'package:agcnews/views/pages/story_page.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesWidget extends StatefulWidget {
-  const CategoriesWidget({super.key, required this.title, required this.id});
+  const CategoriesWidget({
+    super.key,
+    required this.title,
+    required this.id,
+    this.refreshTrigger,
+  });
+
+  final DateTime? refreshTrigger;
 
   final String title;
   final int id;
@@ -27,6 +34,15 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
     setState(() {
       category = API.fetchCategory(categoryId: widget.id);
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant CategoriesWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.refreshTrigger != oldWidget.refreshTrigger) {
+      fetchData();
+    }
   }
 
   @override

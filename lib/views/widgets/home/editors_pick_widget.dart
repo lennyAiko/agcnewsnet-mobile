@@ -5,7 +5,9 @@ import 'package:agcnews/views/pages/story_page.dart';
 import 'package:flutter/material.dart';
 
 class EditorsPickWidget extends StatefulWidget {
-  const EditorsPickWidget({super.key});
+  const EditorsPickWidget({super.key, this.refreshTrigger});
+
+  final DateTime? refreshTrigger;
 
   @override
   State<EditorsPickWidget> createState() => _EditorsPickWidgetState();
@@ -24,6 +26,15 @@ class _EditorsPickWidgetState extends State<EditorsPickWidget> {
     setState(() {
       editorsPick = API.fetchEditorsPick();
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant EditorsPickWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.refreshTrigger != oldWidget.refreshTrigger) {
+      fetchData();
+    }
   }
 
   @override

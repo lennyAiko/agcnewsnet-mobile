@@ -5,7 +5,9 @@ import 'package:agcnews/views/pages/story_page.dart';
 import 'package:flutter/material.dart';
 
 class MissedStoriesWidget extends StatefulWidget {
-  const MissedStoriesWidget({super.key});
+  const MissedStoriesWidget({super.key, this.refreshTrigger});
+
+  final DateTime? refreshTrigger;
 
   @override
   State<MissedStoriesWidget> createState() => _MissedStoriesWidgetState();
@@ -24,6 +26,15 @@ class _MissedStoriesWidgetState extends State<MissedStoriesWidget> {
     setState(() {
       missedStories = API.fetchMissedStories();
     });
+  }
+
+  @override
+  void didUpdateWidget(covariant MissedStoriesWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.refreshTrigger != oldWidget.refreshTrigger) {
+      fetchData();
+    }
   }
 
   @override

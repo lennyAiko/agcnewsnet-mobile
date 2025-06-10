@@ -16,18 +16,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  DateTime? refresh_trigger;
+  DateTime? refreshTrigger;
 
   @override
   void initState() {
     super.initState();
-    refresh_trigger = DateTime.now();
+    refreshTrigger = DateTime.now();
   }
 
   Future<void> _refreshData() async {
-    print("refreshing data");
     setState(() {
-      refresh_trigger = DateTime.now();
+      refreshTrigger = DateTime.now();
     });
   }
 
@@ -65,21 +64,37 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                TopStoriesWidget(refresh_trigger: refresh_trigger),
+                TopStoriesWidget(refreshTrigger: refreshTrigger),
                 SizedBox(height: 25.0),
-                LatestNewsWidget(),
+                LatestNewsWidget(refreshTrigger: refreshTrigger),
                 SizedBox(height: 25.0),
-                EditorsPickWidget(),
+                EditorsPickWidget(refreshTrigger: refreshTrigger),
                 SizedBox(height: 25.0),
-                CategoriesWidget(title: "Politics", id: 1),
+                CategoriesWidget(
+                  title: "Politics",
+                  id: 1,
+                  refreshTrigger: refreshTrigger,
+                ),
                 SizedBox(height: 25.0),
-                CategoriesWidget(title: "Business", id: 2),
+                CategoriesWidget(
+                  title: "Business",
+                  id: 2,
+                  refreshTrigger: refreshTrigger,
+                ),
                 SizedBox(height: 25.0),
-                CategoriesWidget(title: "Sports", id: 3),
+                CategoriesWidget(
+                  title: "Sports",
+                  id: 3,
+                  refreshTrigger: refreshTrigger,
+                ),
                 SizedBox(height: 25.0),
-                CategoriesWidget(title: "Entertainment", id: 4),
+                CategoriesWidget(
+                  title: "Entertainment",
+                  id: 4,
+                  refreshTrigger: refreshTrigger,
+                ),
                 SizedBox(height: 25.0),
-                MissedStoriesWidget(),
+                MissedStoriesWidget(refreshTrigger: refreshTrigger),
                 SizedBox(height: 25.0),
                 FooterWidget(),
               ],
