@@ -5,7 +5,9 @@ import 'package:agcnews/views/pages/story_page.dart';
 import 'package:flutter/material.dart';
 
 class TopStoriesWidget extends StatefulWidget {
-  const TopStoriesWidget({super.key});
+  const TopStoriesWidget({super.key, this.refresh_trigger});
+
+  final DateTime? refresh_trigger;
 
   @override
   State<TopStoriesWidget> createState() => _TopStoriesWidgetState();
@@ -18,6 +20,15 @@ class _TopStoriesWidgetState extends State<TopStoriesWidget> {
   void initState() {
     fetchData();
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant TopStoriesWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.refresh_trigger != oldWidget.refresh_trigger) {
+      fetchData();
+    }
   }
 
   void fetchData() {

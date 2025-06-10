@@ -8,8 +8,28 @@ import 'package:agcnews/views/widgets/home/missed_stories_widget.dart';
 import 'package:agcnews/views/widgets/home/top_stories_widget.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  DateTime? refresh_trigger;
+
+  @override
+  void initState() {
+    super.initState();
+    refresh_trigger = DateTime.now();
+  }
+
+  Future<void> _refreshData() async {
+    print("refreshing data");
+    setState(() {
+      refresh_trigger = DateTime.now();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,30 +57,33 @@ class HomePage extends StatelessWidget {
         ],
       ),
       drawer: SafeArea(child: DrawerWidget()),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              TopStoriesWidget(),
-              SizedBox(height: 25.0),
-              LatestNewsWidget(),
-              SizedBox(height: 25.0),
-              EditorsPickWidget(),
-              SizedBox(height: 25.0),
-              CategoriesWidget(title: "Politics", id: 1),
-              SizedBox(height: 25.0),
-              CategoriesWidget(title: "Business", id: 2),
-              SizedBox(height: 25.0),
-              CategoriesWidget(title: "Sports", id: 3),
-              SizedBox(height: 25.0),
-              CategoriesWidget(title: "Entertainment", id: 4),
-              SizedBox(height: 25.0),
-              MissedStoriesWidget(),
-              SizedBox(height: 25.0),
-              FooterWidget(),
-            ],
+      body: RefreshIndicator(
+        onRefresh: _refreshData,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                TopStoriesWidget(refresh_trigger: refresh_trigger),
+                SizedBox(height: 25.0),
+                LatestNewsWidget(),
+                SizedBox(height: 25.0),
+                EditorsPickWidget(),
+                SizedBox(height: 25.0),
+                CategoriesWidget(title: "Politics", id: 1),
+                SizedBox(height: 25.0),
+                CategoriesWidget(title: "Business", id: 2),
+                SizedBox(height: 25.0),
+                CategoriesWidget(title: "Sports", id: 3),
+                SizedBox(height: 25.0),
+                CategoriesWidget(title: "Entertainment", id: 4),
+                SizedBox(height: 25.0),
+                MissedStoriesWidget(),
+                SizedBox(height: 25.0),
+                FooterWidget(),
+              ],
+            ),
           ),
         ),
       ),
