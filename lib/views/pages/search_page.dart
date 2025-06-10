@@ -56,21 +56,35 @@ class _SearchPageState extends State<SearchPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: TextField(
-                controller: searchController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+            GestureDetector(
+              onTap: () {
+                // Get the current focus node
+                FocusScopeNode currentFocus = FocusScope.of(context);
+
+                // If the current focus is not the primary focus (i.e., the TextField
+                // has focus) and there's a focused child (the TextField),
+                // then unfocus it.
+                if (!currentFocus.hasPrimaryFocus &&
+                    currentFocus.focusedChild != null) {
+                  currentFocus.unfocus();
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: TextField(
+                  controller: searchController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    ),
+                    hintText: 'Search',
                   ),
-                  hintText: 'Search',
+                  onSubmitted: (value) {
+                    currentPage = 1;
+                    stories.clear();
+                    fetchData();
+                  },
                 ),
-                onSubmitted: (value) {
-                  currentPage = 1;
-                  stories.clear();
-                  fetchData();
-                },
               ),
             ),
             FutureBuilder(
