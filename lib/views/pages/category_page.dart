@@ -44,6 +44,20 @@ class _CategoryPageState extends State<CategoryPage> {
     );
   }
 
+  Future<void> _refreshData() async {
+    setState(() {
+      latestArticles = API.fetchCategoryStories(
+        categoryId: widget.categoryId,
+        page: currentPage,
+      );
+    });
+    latestArticles!.then(
+      (value) => setState(() {
+        latestArticlesList.addAll(value);
+      }),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,35 +71,38 @@ class _CategoryPageState extends State<CategoryPage> {
         future: latestArticles,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    for (int i = 0; i <= 3; i++)
-                      Column(
-                        children: [
-                          Container(
-                            height: 200.0,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(15.0),
+            return RefreshIndicator(
+              onRefresh: _refreshData,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      for (int i = 0; i <= 3; i++)
+                        Column(
+                          children: [
+                            Container(
+                              height: 200.0,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 15.0),
-                          Container(
-                            height: 30.0,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(15.0),
+                            SizedBox(height: 15.0),
+                            Container(
+                              height: 30.0,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 20.0),
-                        ],
-                      ),
-                  ],
+                            SizedBox(height: 20.0),
+                          ],
+                        ),
+                    ],
+                  ),
                 ),
               ),
             );

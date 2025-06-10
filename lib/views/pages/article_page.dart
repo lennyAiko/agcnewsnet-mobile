@@ -35,6 +35,17 @@ class _ArticlePageState extends State<ArticlePage> {
     );
   }
 
+  Future<void> _refreshData() async {
+    setState(() {
+      latestArticles = API.fetchLatestArticles();
+    });
+    latestArticles!.then(
+      (value) => setState(() {
+        latestArticlesList.addAll(value);
+      }),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,20 +104,154 @@ class _ArticlePageState extends State<ArticlePage> {
             } else {
               final firstActivity = snapshot.data!.first;
               final otherActivities = latestArticlesList.sublist(1);
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.all(15.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 5.0),
-                      Text("Latest in Article", style: AgcTextStyle.header1),
-                      SizedBox(height: 5.0),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+              return RefreshIndicator(
+                onRefresh: _refreshData,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.all(15.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 5.0),
+                        Text("Latest in Article", style: AgcTextStyle.header1),
+                        SizedBox(height: 5.0),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                InkWell(
+                                  hoverColor: Colors.transparent,
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder:
+                                            (context) => StoryPage(
+                                              storyId: firstActivity.id,
+                                            ),
+                                      ),
+                                    );
+                                  },
+                                  child: Column(
+                                    children: [
+                                      Stack(
+                                        alignment: Alignment.topLeft,
+                                        children: [
+                                          Hero(
+                                            tag: "latestArticle",
+                                            child: AspectRatio(
+                                              aspectRatio: 1920 / 1080,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                child: Image.network(
+                                                  firstActivity.bannerImage,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          FittedBox(
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(
+                                                15.0,
+                                              ),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Colors.white,
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                        30.0,
+                                                      ),
+                                                  color: Colors.pink,
+                                                ),
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  firstActivity
+                                                      .category
+                                                      .categoryName,
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 13.0,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 10.0),
+                                      Text(
+                                        firstActivity.title,
+                                        style: AgcTextStyle.header3,
+                                        maxLines: 2,
+                                      ),
+                                      SizedBox(height: 10.0),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            "Posted on ${DateTime.parse(firstActivity.createdAt.toString()).day}${AgcDate.getDaySuffix(DateTime.parse(firstActivity.createdAt.toString()).day)} ${AgcDate.months[DateTime.parse(firstActivity.createdAt.toString()).month]} ${DateTime.parse(firstActivity.createdAt.toString()).year}",
+                                            style: TextStyle(
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.w400,
+                                              letterSpacing: 0.1,
+                                            ),
+                                          ),
+                                          Spacer(),
+                                          Text(
+                                            "${AgcDate.calculateReadTime(firstActivity.content)} min(s) read",
+                                            style: TextStyle(
+                                              fontSize: 13.0,
+                                              fontWeight: FontWeight.w400,
+                                              letterSpacing: 0.1,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 10.0),
+                                      Text(
+                                        firstActivity.description,
+                                        style: AgcTextStyle.description,
+                                        maxLines: 3,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15.0),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: WidgetStateProperty.all(
+                              Colors.pink,
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder:
+                                    (context) =>
+                                        StoryPage(storyId: firstActivity.id),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "Read more",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        SizedBox(height: 40.0),
+                        for (final activity in otherActivities)
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               InkWell(
                                 hoverColor: Colors.transparent,
@@ -115,207 +260,84 @@ class _ArticlePageState extends State<ArticlePage> {
                                     context,
                                     MaterialPageRoute(
                                       builder:
-                                          (context) => StoryPage(
-                                            storyId: firstActivity.id,
-                                          ),
+                                          (context) =>
+                                              StoryPage(storyId: activity.id),
                                     ),
                                   );
                                 },
                                 child: Column(
                                   children: [
-                                    Stack(
-                                      alignment: Alignment.topLeft,
-                                      children: [
-                                        Hero(
-                                          tag: "latestArticle",
-                                          child: AspectRatio(
-                                            aspectRatio: 1920 / 1080,
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              child: Image.network(
-                                                firstActivity.bannerImage,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
+                                    AspectRatio(
+                                      aspectRatio: 2140 / 1080,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(
+                                          10.0,
                                         ),
-                                        FittedBox(
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(15.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: Colors.white,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(30.0),
-                                                color: Colors.pink,
-                                              ),
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Text(
-                                                firstActivity
-                                                    .category
-                                                    .categoryName,
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 13.0,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                        child: Image.network(
+                                          activity.bannerImage,
+                                          fit: BoxFit.cover,
                                         ),
-                                      ],
+                                      ),
                                     ),
-                                    SizedBox(height: 10.0),
                                     Text(
-                                      firstActivity.title,
-                                      style: AgcTextStyle.header3,
+                                      activity.title,
+                                      style: TextStyle(
+                                        fontSize: 14.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                       maxLines: 2,
-                                    ),
-                                    SizedBox(height: 10.0),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "Posted on ${DateTime.parse(firstActivity.createdAt.toString()).day}${AgcDate.getDaySuffix(DateTime.parse(firstActivity.createdAt.toString()).day)} ${AgcDate.months[DateTime.parse(firstActivity.createdAt.toString()).month]} ${DateTime.parse(firstActivity.createdAt.toString()).year}",
-                                          style: TextStyle(
-                                            fontSize: 12.0,
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 0.1,
-                                          ),
-                                        ),
-                                        Spacer(),
-                                        Text(
-                                          "${AgcDate.calculateReadTime(firstActivity.content)} min(s) read",
-                                          style: TextStyle(
-                                            fontSize: 13.0,
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 0.1,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 10.0),
-                                    Text(
-                                      firstActivity.description,
-                                      style: AgcTextStyle.description,
-                                      maxLines: 3,
                                     ),
                                   ],
                                 ),
                               ),
+                              SizedBox(height: 25.0),
                             ],
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 15.0),
-                      ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: WidgetStateProperty.all(Colors.pink),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) =>
-                                      StoryPage(storyId: firstActivity.id),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          "Read more",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                      SizedBox(height: 40.0),
-                      for (final activity in otherActivities)
-                        Column(
-                          children: [
-                            InkWell(
-                              hoverColor: Colors.transparent,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder:
-                                        (context) =>
-                                            StoryPage(storyId: activity.id),
-                                  ),
-                                );
-                              },
-                              child: Column(
-                                children: [
-                                  AspectRatio(
-                                    aspectRatio: 2140 / 1080,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      child: Image.network(
-                                        activity.bannerImage,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  Text(
-                                    activity.title,
-                                    style: TextStyle(
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    maxLines: 2,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 25.0),
-                          ],
-                        ),
-                      FutureBuilder(
-                        future: articles,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(
-                              child: Padding(
-                                padding: EdgeInsets.all(20.0),
-                                child: CircularProgressIndicator(),
-                              ),
-                            );
-                          } else {
-                            return Center(
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  backgroundColor: WidgetStateProperty.all(
-                                    Colors.pink,
-                                  ),
+                        FutureBuilder(
+                          future: articles,
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(
+                                child: Padding(
+                                  padding: EdgeInsets.all(20.0),
+                                  child: CircularProgressIndicator(),
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    articles = API.fetchLatestArticles(
-                                      page: currentPage + 1,
+                              );
+                            } else {
+                              return Center(
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: WidgetStateProperty.all(
+                                      Colors.pink,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      articles = API.fetchLatestArticles(
+                                        page: currentPage + 1,
+                                      );
+                                    });
+                                    currentPage++;
+                                    articles!.then(
+                                      (value) => setState(() {
+                                        latestArticlesList.addAll(value);
+                                      }),
                                     );
-                                  });
-                                  currentPage++;
-                                  articles!.then(
-                                    (value) => setState(() {
-                                      latestArticlesList.addAll(value);
-                                    }),
-                                  );
-                                },
-                                child: Text(
-                                  "Load more",
-                                  style: TextStyle(color: Colors.white),
+                                  },
+                                  child: Text(
+                                    "Load more",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
-                              ),
-                            );
-                          }
-                        },
-                      ),
-                      SizedBox(height: 25.0),
-                      FooterWidget(),
-                    ],
+                              );
+                            }
+                          },
+                        ),
+                        SizedBox(height: 25.0),
+                        FooterWidget(),
+                      ],
+                    ),
                   ),
                 ),
               );
